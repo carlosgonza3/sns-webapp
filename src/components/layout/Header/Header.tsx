@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { ArrowRight, Menu, X } from 'lucide-react';
-import { Link, NavLink } from 'react-router-dom';
+import {
+    Link,
+    NavLink,
+    useLocation,
+} from 'react-router-dom';
 
 import logo from '@/assets/images/logo.png';
 import { Container } from '@/components/layout/Container/Container';
@@ -33,6 +37,9 @@ const navigationItems = [
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { pathname } = useLocation();
+
+    const isHomePage = pathname === '/';
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -60,11 +67,18 @@ export function Header() {
                     to="/"
                     aria-label="SNS home"
                     onClick={closeMenu}
+                    data-header-logo-target
                 >
                     <img
-                        className={styles.logo}
+                        className={[
+                            styles.logo,
+                            isHomePage ? styles.logoHome : '',
+                        ]
+                            .filter(Boolean)
+                            .join(' ')}
                         src={logo}
                         alt="SNS"
+                        data-header-logo
                     />
                 </Link>
 

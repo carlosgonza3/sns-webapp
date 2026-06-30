@@ -22,16 +22,22 @@
 
 .logoLink {
   display: inline-flex;
-  width: fit-content;
+  width: clamp(3rem, 3.3vw, 3.75rem);
   align-items: center;
   justify-content: center;
 }
 
 .logo {
   display: block;
-  width: clamp(3rem, 3.3vw, 3.75rem);
+  width: 100%;
   height: auto;
   object-fit: contain;
+  opacity: 1;
+  visibility: visible;
+}
+
+.logoHome {
+  opacity: 0;
 }
 
 .navigation {
