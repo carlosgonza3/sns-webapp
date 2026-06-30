@@ -1,4 +1,7 @@
-import { useRef } from 'react';
+import {
+    useEffect,
+    useRef,
+} from 'react';
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -22,7 +25,9 @@ type ElementBounds = {
     height: number;
 };
 
-function getElementBounds(element: HTMLElement): ElementBounds {
+function getElementBounds(
+    element: HTMLElement,
+): ElementBounds {
     const bounds = element.getBoundingClientRect();
 
     return {
@@ -33,12 +38,42 @@ function getElementBounds(element: HTMLElement): ElementBounds {
     };
 }
 
+function interpolate(
+    start: number,
+    end: number,
+    progress: number,
+) {
+    return start + (end - start) * progress;
+}
+
 export function HomeHeroSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const sourceLogoRef = useRef<HTMLImageElement>(null);
     const floatingLogoRef = useRef<HTMLImageElement>(null);
 
     const prefersReducedMotion = usePrefersReducedMotion();
+
+    useEffect(() => {
+        const htmlElement = document.documentElement;
+        const bodyElement = document.body;
+
+        const previousHtmlOverscroll =
+            htmlElement.style.overscrollBehaviorY;
+
+        const previousBodyOverscroll =
+            bodyElement.style.overscrollBehaviorY;
+
+        htmlElement.style.overscrollBehaviorY = 'none';
+        bodyElement.style.overscrollBehaviorY = 'none';
+
+        return () => {
+            htmlElement.style.overscrollBehaviorY =
+                previousHtmlOverscroll;
+
+            bodyElement.style.overscrollBehaviorY =
+                previousBodyOverscroll;
+        };
+    }, []);
 
     useGSAP(
         () => {
@@ -66,25 +101,24 @@ export function HomeHeroSection() {
                 return;
             }
 
-            const placeAtSource = () => {
-                const sourceBounds = getElementBounds(sourceLogo);
+            let isDestroyed = false;
+            let isInitialized = false;
+            let firstFrameId = 0;
+            let secondFrameId = 0;
 
-                gsap.set(floatingLogo, {
-                    top: sourceBounds.top,
-                    left: sourceBounds.left,
-                    width: sourceBounds.width,
-                    height: sourceBounds.height,
-                    autoAlpha: 1,
-                    x: 0,
-                    y: 0,
-                });
+            const animationState = {
+                progress: 0,
             };
 
-            /*
-             * On Home, the real Hero and Header images remain as invisible
-             * layout markers. The floating image is the only visible logo.
-             */
+            let progressTween: gsap.core.Tween | null = null;
+            let scrollTrigger: ScrollTrigger | null = null;
+            let resizeObserver: ResizeObserver | null = null;
+
             gsap.set(sourceLogo, {
+                autoAlpha: 1,
+            });
+
+            gsap.set(floatingLogo, {
                 autoAlpha: 0,
             });
 
@@ -92,49 +126,215 @@ export function HomeHeroSection() {
                 autoAlpha: 0,
             });
 
-            placeAtSource();
+            const renderFloatingLogo = (
+                progress: number,
+            ): boolean => {
+                const sourceBounds =
+                    getElementBounds(sourceLogo);
 
-            if (prefersReducedMotion) {
-                return;
-            }
+                const targetBounds =
+                    getElementBounds(headerTarget);
 
-            const logoTween = gsap.to(floatingLogo, {
-                top: () => getElementBounds(headerTarget).top,
-                left: () => getElementBounds(headerTarget).left,
-                width: () => getElementBounds(headerTarget).width,
-                height: () => getElementBounds(headerTarget).height,
-                ease: 'none',
-                paused: true,
-            });
+                if (
+                    sourceBounds.width <= 0 ||
+                    sourceBounds.height <= 0 ||
+                    targetBounds.width <= 0 ||
+                    targetBounds.height <= 0
+                ) {
+                    return false;
+                }
 
-            const scrollTrigger = ScrollTrigger.create({
-                trigger: sectionElement,
-                start: 'top top',
-                end: () => `+=${window.innerHeight * 0.55}`,
-                scrub: 0.65,
-                animation: logoTween,
-                invalidateOnRefresh: true,
-                fastScrollEnd: false,
-                onRefreshInit: () => {
-                    /*
-                     * Recalculate the starting box after responsive layout
-                     * changes without forcing the animation to either end.
-                     */
-                    placeAtSource();
-                },
-            });
+                const safeProgress = gsap.utils.clamp(
+                    0,
+                    1,
+                    progress,
+                );
 
-            const handleResize = () => {
+                gsap.set(floatingLogo, {
+                    top: interpolate(
+                        sourceBounds.top,
+                        targetBounds.top,
+                        safeProgress,
+                    ),
+                    left: interpolate(
+                        sourceBounds.left,
+                        targetBounds.left,
+                        safeProgress,
+                    ),
+                    width: interpolate(
+                        sourceBounds.width,
+                        targetBounds.width,
+                        safeProgress,
+                    ),
+                    height: interpolate(
+                        sourceBounds.height,
+                        targetBounds.height,
+                        safeProgress,
+                    ),
+                    autoAlpha: 1,
+                    x: 0,
+                    y: 0,
+                });
+
+                return true;
+            };
+
+            const initializeAnimation = () => {
+                if (isDestroyed || isInitialized) {
+                    return;
+                }
+
+                const wasPositioned =
+                    renderFloatingLogo(0);
+
+                if (!wasPositioned) {
+                    return;
+                }
+
+                isInitialized = true;
+
+                gsap.set(sourceLogo, {
+                    autoAlpha: 0,
+                });
+
+                if (prefersReducedMotion) {
+                    return;
+                }
+
+                progressTween = gsap.to(animationState, {
+                    progress: 1,
+                    paused: true,
+                    ease: 'none',
+                    onUpdate: () => {
+                        renderFloatingLogo(
+                            animationState.progress,
+                        );
+                    },
+                });
+
+                scrollTrigger = ScrollTrigger.create({
+                    trigger: sectionElement,
+                    start: 'top top',
+                    end: () =>
+                        `+=${window.innerHeight * 0.55}`,
+                    animation: progressTween,
+                    scrub: 0.65,
+                    invalidateOnRefresh: true,
+                    fastScrollEnd: false,
+
+                    onRefresh: (trigger) => {
+                        animationState.progress =
+                            trigger.progress;
+
+                        renderFloatingLogo(
+                            animationState.progress,
+                        );
+                    },
+                });
+
+                resizeObserver = new ResizeObserver(() => {
+                    renderFloatingLogo(
+                        animationState.progress,
+                    );
+                });
+
+                resizeObserver.observe(sourceLogo);
+                resizeObserver.observe(headerTarget);
+
                 ScrollTrigger.refresh();
             };
 
-            window.addEventListener('resize', handleResize);
+            const scheduleInitialization = () => {
+                firstFrameId =
+                    window.requestAnimationFrame(() => {
+                        secondFrameId =
+                            window.requestAnimationFrame(
+                                () => {
+                                    initializeAnimation();
+                                },
+                            );
+                    });
+            };
+
+            if (sourceLogo.complete) {
+                sourceLogo
+                    .decode()
+                    .catch(() => undefined)
+                    .finally(scheduleInitialization);
+            } else {
+                sourceLogo.addEventListener(
+                    'load',
+                    scheduleInitialization,
+                    {
+                        once: true,
+                    },
+                );
+            }
+
+            const handleViewportResize = () => {
+                if (!isInitialized) {
+                    initializeAnimation();
+                    return;
+                }
+
+                renderFloatingLogo(
+                    animationState.progress,
+                );
+
+                ScrollTrigger.refresh();
+            };
+
+            window.addEventListener(
+                'resize',
+                handleViewportResize,
+            );
+
+            window.visualViewport?.addEventListener(
+                'resize',
+                handleViewportResize,
+            );
+
+            document.fonts.ready.then(() => {
+                if (isDestroyed) {
+                    return;
+                }
+
+                if (!isInitialized) {
+                    initializeAnimation();
+                    return;
+                }
+
+                renderFloatingLogo(
+                    animationState.progress,
+                );
+
+                ScrollTrigger.refresh();
+            });
 
             return () => {
-                window.removeEventListener('resize', handleResize);
+                isDestroyed = true;
 
-                scrollTrigger.kill();
-                logoTween.kill();
+                window.cancelAnimationFrame(firstFrameId);
+                window.cancelAnimationFrame(secondFrameId);
+
+                sourceLogo.removeEventListener(
+                    'load',
+                    scheduleInitialization,
+                );
+
+                window.removeEventListener(
+                    'resize',
+                    handleViewportResize,
+                );
+
+                window.visualViewport?.removeEventListener(
+                    'resize',
+                    handleViewportResize,
+                );
+
+                resizeObserver?.disconnect();
+                scrollTrigger?.kill();
+                progressTween?.kill();
 
                 gsap.set(sourceLogo, {
                     clearProps: 'opacity,visibility',
@@ -177,9 +377,33 @@ export function HomeHeroSection() {
                         src={logo}
                         alt=""
                         aria-hidden="true"
+                        data-floating-logo
                     />,
                     document.body,
                 )}
+
+                <div
+                    className={styles.gradientLayer}
+                    aria-hidden="true"
+                >
+                    <span
+                        className={
+                            styles.gradientOrbPrimary
+                        }
+                    />
+
+                    <span
+                        className={
+                            styles.gradientOrbSecondary
+                        }
+                    />
+
+                    <span
+                        className={
+                            styles.gradientOrbAccent
+                        }
+                    />
+                </div>
 
                 <div className={styles.heroGrid}>
                     <div
@@ -200,7 +424,9 @@ export function HomeHeroSection() {
                             className={styles.eyebrow}
                             data-snap-reveal
                         >
-                            <span className={styles.eyebrowLine} />
+                            <span
+                                className={styles.eyebrowLine}
+                            />
 
                             <span>
                                 Your strategic finance partner
@@ -211,10 +437,19 @@ export function HomeHeroSection() {
                             className={styles.heading}
                             data-snap-reveal
                         >
-                            <span>Technology-Enabled</span>
-                            <span>Finance Operations</span>
+                            <span>
+                                Technology-Enabled
+                            </span>
 
-                            <span className={styles.headingAccent}>
+                            <span>
+                                Finance Operations
+                            </span>
+
+                            <span
+                                className={
+                                    styles.headingAccent
+                                }
+                            >
                                 &amp; Advisory Partner
                             </span>
                         </h1>
@@ -223,10 +458,11 @@ export function HomeHeroSection() {
                             className={styles.description}
                             data-snap-reveal
                         >
-                            We deliver the financial infrastructure,
-                            reporting, and executive-level guidance
-                            companies need without the cost and
-                            complexity of building an internal finance
+                            We deliver the financial
+                            infrastructure, reporting, and
+                            executive-level guidance companies
+                            need without the cost and complexity
+                            of building an internal finance
                             department.
                         </p>
 
@@ -235,7 +471,9 @@ export function HomeHeroSection() {
                             data-snap-reveal
                         >
                             <Link
-                                className={styles.primaryAction}
+                                className={
+                                    styles.primaryAction
+                                }
                                 to="/#contact"
                             >
                                 <span>
@@ -246,7 +484,9 @@ export function HomeHeroSection() {
                             </Link>
 
                             <Link
-                                className={styles.secondaryAction}
+                                className={
+                                    styles.secondaryAction
+                                }
                                 to="/#operations"
                             >
                                 Learn more

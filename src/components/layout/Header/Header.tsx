@@ -51,6 +51,33 @@ export function Header() {
         };
     }, [isMenuOpen]);
 
+    useEffect(() => {
+        const floatingLogo =
+            document.querySelector<HTMLElement>(
+                '[data-floating-logo]',
+            );
+
+        if (!floatingLogo) {
+            return;
+        }
+
+        const previousVisibility =
+            floatingLogo.style.visibility;
+
+        floatingLogo.style.visibility = isMenuOpen
+            ? 'hidden'
+            : '';
+
+        return () => {
+            floatingLogo.style.visibility =
+                previousVisibility;
+        };
+    }, [isMenuOpen]);
+
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [pathname]);
+
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
@@ -85,27 +112,31 @@ export function Header() {
                 <nav
                     id="primary-navigation"
                     className={`${styles.navigation} ${
-                        isMenuOpen ? styles.navigationOpen : ''
+                        isMenuOpen
+                            ? styles.navigationOpen
+                            : ''
                     }`}
                     aria-label="Primary navigation"
                 >
-                    {navigationItems.map(({ label, to, end }) => (
-                        <NavLink
-                            key={to}
-                            className={({ isActive }) =>
-                                `${styles.navigationLink} ${
-                                    isActive
-                                        ? styles.navigationLinkActive
-                                        : ''
-                                }`
-                            }
-                            end={end}
-                            to={to}
-                            onClick={closeMenu}
-                        >
-                            {label}
-                        </NavLink>
-                    ))}
+                    {navigationItems.map(
+                        ({ label, to, end }) => (
+                            <NavLink
+                                key={to}
+                                className={({ isActive }) =>
+                                    `${styles.navigationLink} ${
+                                        isActive
+                                            ? styles.navigationLinkActive
+                                            : ''
+                                    }`
+                                }
+                                end={end}
+                                to={to}
+                                onClick={closeMenu}
+                            >
+                                {label}
+                            </NavLink>
+                        ),
+                    )}
 
                     <Link
                         className={styles.navigationLink}
