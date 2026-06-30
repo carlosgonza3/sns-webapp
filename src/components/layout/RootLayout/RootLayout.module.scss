@@ -1,0 +1,36 @@
+.site {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.skipLink {
+  position: fixed;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 1000;
+  padding: var(--space-3) var(--space-5);
+  border-radius: 999px;
+  background: var(--color-neutral-950);
+  color: var(--color-neutral-0);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-150%);
+  transition:
+          opacity var(--duration-fast) var(--ease-standard),
+          transform var(--duration-fast) var(--ease-standard);
+
+  &:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
