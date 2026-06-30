@@ -43,26 +43,19 @@ export function Section({
         .filter(Boolean)
         .join(' ');
 
-    const content = contained ? (
-        <Container
-            className={`${styles.content} ${contentClassName}`.trim()}
-        >
-            {children}
-        </Container>
-    ) : (
-        <div
-            className={`${styles.content} ${contentClassName}`.trim()}
-        >
-            {children}
-        </div>
-    );
+    const contentClassNames = [
+        styles.content,
+        contentClassName,
+    ]
+        .filter(Boolean)
+        .join(' ');
 
     return (
         <section
             id={id}
             className={sectionClassName}
             data-section-theme={theme}
-            data-snap-section={snap ? '' : undefined}
+            data-snap-section={snap ? 'true' : undefined}
         >
             {background ? (
                 <div
@@ -73,7 +66,15 @@ export function Section({
                 </div>
             ) : null}
 
-            {content}
+            {contained ? (
+                <Container className={contentClassNames}>
+                    {children}
+                </Container>
+            ) : (
+                <div className={contentClassNames}>
+                    {children}
+                </div>
+            )}
         </section>
     );
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { Menu, X } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
 
+import logo from '@/assets/images/logo.png';
 import { Container } from '@/components/layout/Container/Container';
 
 import styles from './Header.module.scss';
@@ -34,32 +35,38 @@ export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
+        const previousOverflow = document.body.style.overflow;
+
         document.body.style.overflow = isMenuOpen ? 'hidden' : '';
 
         return () => {
-            document.body.style.overflow = '';
+            document.body.style.overflow = previousOverflow;
         };
     }, [isMenuOpen]);
 
-    const handleMenuToggle = () => {
-        setIsMenuOpen((currentState) => !currentState);
+    const closeMenu = () => {
+        setIsMenuOpen(false);
     };
 
-    const handleNavigation = () => {
-        setIsMenuOpen(false);
+    const toggleMenu = () => {
+        setIsMenuOpen((currentState) => !currentState);
     };
 
     return (
         <header className={styles.header}>
             <Container className={styles.container}>
-                <NavLink
-                    className={styles.brand}
+                <Link
+                    className={styles.logoLink}
                     to="/"
                     aria-label="SNS home"
-                    onClick={handleNavigation}
+                    onClick={closeMenu}
                 >
-                    SNS
-                </NavLink>
+                    <img
+                        className={styles.logo}
+                        src={logo}
+                        alt="SNS"
+                    />
+                </Link>
 
                 <nav
                     id="primary-navigation"
@@ -80,12 +87,38 @@ export function Header() {
                             }
                             end={end}
                             to={to}
-                            onClick={handleNavigation}
+                            onClick={closeMenu}
                         >
                             {label}
                         </NavLink>
                     ))}
+
+                    <Link
+                        className={styles.navigationLink}
+                        to="/#contact"
+                        onClick={closeMenu}
+                    >
+                        Contacts
+                    </Link>
+
+                    <Link
+                        className={styles.mobileCta}
+                        to="/#contact"
+                        onClick={closeMenu}
+                    >
+                        <span>Book a Consultation</span>
+                        <ArrowRight aria-hidden="true" />
+                    </Link>
                 </nav>
+
+                <Link
+                    className={styles.desktopCta}
+                    to="/#contact"
+                    onClick={closeMenu}
+                >
+                    <span>Book a Consultation</span>
+                    <ArrowRight aria-hidden="true" />
+                </Link>
 
                 <button
                     className={styles.menuButton}
@@ -97,7 +130,7 @@ export function Header() {
                     }
                     aria-controls="primary-navigation"
                     aria-expanded={isMenuOpen}
-                    onClick={handleMenuToggle}
+                    onClick={toggleMenu}
                 >
                     {isMenuOpen ? (
                         <X aria-hidden="true" />

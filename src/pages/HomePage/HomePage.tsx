@@ -1,40 +1,12 @@
 import { Section } from '@/components/layout/Section/Section';
 import { SnapPage } from '@/components/layout/SnapPage/SnapPage';
+import { HomeHeroSection } from '@/sections/home/HomeHeroSection/HomeHeroSection';
 
 export default function HomePage() {
     return (
         <main id="main-content">
             <SnapPage>
-                <Section
-                    id="home"
-                    theme="gradient"
-                    snap
-                    fullHeight
-                >
-                    <p
-                        className="eyebrow"
-                        data-snap-reveal
-                    >
-                        Technology-enabled finance operations
-                    </p>
-
-                    <h1
-                        className="displayHeading"
-                        data-snap-reveal
-                    >
-                        Finance operations built for clarity, control,
-                        and scale.
-                    </h1>
-
-                    <p
-                        className="lead"
-                        data-snap-reveal
-                    >
-                        We combine experienced finance professionals
-                        with intelligent technology to create more
-                        efficient financial operations.
-                    </p>
-                </Section>
+                <HomeHeroSection />
 
                 <Section
                     id="operations"

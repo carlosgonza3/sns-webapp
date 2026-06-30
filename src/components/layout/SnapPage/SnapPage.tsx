@@ -36,13 +36,15 @@ export function SnapPage({
 
     useGSAP(
         () => {
-            if (!pageRef.current) {
+            const pageElement = pageRef.current;
+
+            if (!pageElement) {
                 return;
             }
 
             const sections = gsap.utils.toArray<HTMLElement>(
                 '[data-snap-section]',
-                pageRef.current,
+                pageElement,
             );
 
             sections.forEach((section) => {
@@ -58,31 +60,31 @@ export function SnapPage({
                 if (prefersReducedMotion) {
                     gsap.set(revealElements, {
                         autoAlpha: 1,
-                        clearProps: 'transform',
+                        y: 0,
                     });
 
                     return;
                 }
 
-                gsap.fromTo(
-                    revealElements,
-                    {
-                        autoAlpha: 0,
-                        y: 48,
+                gsap.set(revealElements, {
+                    autoAlpha: 0,
+                    y: 56,
+                });
+
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top 72%',
+                    once: true,
+                    onEnter: () => {
+                        gsap.to(revealElements, {
+                            autoAlpha: 1,
+                            y: 0,
+                            duration: 1,
+                            stagger: 0.14,
+                            ease: 'power3.out',
+                        });
                     },
-                    {
-                        autoAlpha: 1,
-                        y: 0,
-                        duration: 1,
-                        stagger: 0.12,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: section,
-                            start: 'top 72%',
-                            once: true,
-                        },
-                    },
-                );
+                });
             });
 
             ScrollTrigger.refresh();

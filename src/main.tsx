@@ -6,6 +6,18 @@ import { App } from '@/app/App';
 
 import '@/styles/global.scss';
 
+if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+}
+
+if (!window.location.hash) {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto',
+    });
+}
+
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {

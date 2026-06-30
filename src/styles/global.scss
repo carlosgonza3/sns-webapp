@@ -8,25 +8,22 @@
 @use './base/typography' as typographyBase;
 
 html {
+  min-height: 100%;
   background: var(--color-neutral-950);
 }
 
 html.snapScrollEnabled {
-  scroll-padding-top: var(--header-height);
   scroll-snap-type: y mandatory;
 }
 
 body {
+  min-height: 100%;
   background: var(--color-neutral-0);
   color: var(--color-neutral-950);
 }
 
 #root {
   min-height: 100vh;
-}
-
-html.snapScrollEnabled footer {
-  scroll-snap-align: end;
 }
 
 ::selection {
@@ -48,7 +45,7 @@ html.snapScrollEnabled footer {
 
 .routeLoader {
   display: grid;
-  min-height: calc(100svh - var(--header-height));
+  min-height: 100svh;
   place-items: center;
   background: var(--color-neutral-950);
 }
