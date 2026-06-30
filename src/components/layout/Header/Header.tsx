@@ -74,10 +74,6 @@ export function Header() {
         };
     }, [isMenuOpen]);
 
-    useEffect(() => {
-        setIsMenuOpen(false);
-    }, [pathname]);
-
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
