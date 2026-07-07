@@ -1,0 +1,54 @@
+@font-face {
+  font-family: 'Lora';
+  src: url('../../assets/fonts/lora/lora-regular.ttf')
+  format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('../../assets/fonts/raleway/raleway-regular.ttf')
+  format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Telegraf';
+  src: url('../../assets/fonts/telegraf/PPTelegraf-UltraLight.otf')
+  format('opentype');
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Telegraf';
+  src: url('../../assets/fonts/telegraf/PPTelegraf-Regular.otf')
+  format('opentype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Telegraf';
+  src: url('../../assets/fonts/telegraf/PPTelegraf-UltraBold.otf')
+  format('opentype');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+:root {
+  --font-lora: 'Lora', Georgia, serif;
+  --font-raleway: 'Raleway', Arial, sans-serif;
+  --font-telegraf: 'Telegraf', Arial, sans-serif;
+
+  --font-display: var(--font-lora);
+  --font-heading: var(--font-telegraf);
+  --font-body: var(--font-raleway);
+}

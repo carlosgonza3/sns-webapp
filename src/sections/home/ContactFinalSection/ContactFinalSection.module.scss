@@ -1,0 +1,469 @@
+.section {
+  width: 100%;
+  min-height: 100svh;
+  overflow: visible;
+  padding: 0;
+  background: #f7f7f6;
+}
+
+.sectionContent {
+  width: 100%;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+.contactPanel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: 100%;
+  min-height: 100svh;
+  overflow: visible;
+  background: #f7f7f6;
+  grid-template-columns: minmax(0, 0.92fr) minmax(42rem, 1.08fr);
+}
+
+.radialStage {
+  /*
+   * Shared ellipse center.
+   *
+   * The center is intentionally low and left.
+   * The image boxes are large enough so the hard PNG edges stay
+   * outside the visible viewport.
+   */
+  --ellipse-center-x: 16vw;
+  --ellipse-center-y: 62svh;
+
+  --ellipse-large-width: 76rem;
+  --ellipse-large-height: 76rem;
+
+  --ellipse-small-width: 58rem;
+  --ellipse-small-height: 58rem;
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ellipse {
+  position: absolute;
+  display: block;
+  max-width: none;
+  margin: 0;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ellipseLarge {
+  top: var(--ellipse-center-y);
+  left: var(--ellipse-center-x);
+  z-index: 0;
+  width: var(--ellipse-large-width);
+  height: var(--ellipse-large-height);
+  opacity: 0.92;
+  transform: translate(-50%, -50%);
+  animation: ellipse-large-breathe 26s
+  cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.ellipseSmall {
+  top: var(--ellipse-center-y);
+  left: var(--ellipse-center-x);
+  z-index: 1;
+  width: var(--ellipse-small-width);
+  height: var(--ellipse-small-height);
+  opacity: 0.72;
+  transform: translate(-50%, -50%);
+  animation: ellipse-small-breathe 22s
+  cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.visualColumn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100svh;
+  overflow: visible;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.visualContent {
+  width: min(100%, 44rem);
+  margin-top: 10rem;
+}
+
+.eyebrowGroup {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  color: #ffffff;
+}
+
+.eyebrowLine {
+  width: clamp(4.5rem, 7vw, 6.5rem);
+  height: 2px;
+  background: currentColor;
+}
+
+.eyebrowGroup p {
+  margin: 0;
+  font-family: var(--font-raleway), Arial, sans-serif;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.heading {
+  max-width: 33rem;
+  margin: clamp(3rem, 7vh, 5rem) 0 0;
+  color: #ffffff;
+  font-family: Lora;
+  font-size: 3.8rem;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.834;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.contentColumn {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: center;
+  padding:
+          clamp(6rem, 10vh, 8rem)
+          clamp(2rem, 4vw, 4.5rem)
+          clamp(3rem, 5vh, 4rem);
+}
+
+.logoMark {
+  display: block;
+  width:  20rem;
+  height: auto;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.contentGrid {
+  display: grid;
+  align-items: start;
+  width: 100%;
+  line-height: 2rem;
+  gap: 3rem;
+  margin-top: clamp(3.5rem, 7vh, 5.5rem);
+  grid-template-columns:
+        minmax(12rem, 0.82fr)
+        minmax(9rem, 0.55fr)
+        minmax(15rem, 1fr);
+}
+
+.statement {
+  max-width: 17rem;
+  margin: 0;
+  color: #0b0b0b;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: clamp(1.15rem, 1.45vw, 1.45rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.72;
+}
+
+.footerNav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.6rem, 3.3vh, 2.7rem);
+
+  a {
+    width: fit-content;
+    color: #111111;
+    font-family: var(--font-telegraf), Arial, sans-serif;
+    font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.35rem;
+    text-transform: uppercase;
+    transition:
+            color 180ms ease,
+            transform 180ms ease;
+
+    &:hover {
+      color: #100a5b;
+      transform: translateX(0.3rem);
+    }
+  }
+}
+
+.address {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: clamp(1rem, 2.2vh, 1.5rem);
+  color: #111111;
+  font-family: var(--font-telegraf), Arial, sans-serif;
+  font-size: clamp(1rem, 1.35vw, 1.35rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.08;
+
+  p {
+    max-width: 17rem;
+    margin: 0;
+  }
+
+  span {
+    font-weight: 400;
+  }
+
+  a {
+    color: inherit;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.14rem;
+  }
+}
+
+.consultationButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 23rem);
+  margin-top: clamp(4rem, 8vh, 6rem);
+  margin-left: auto;
+  padding:
+          0.95rem
+          1.35rem;
+  border: 1px solid rgb(100 72 72 / 46%);
+  border-radius: 999px;
+  color: #050505;
+  font-family: var(--font-telegraf), Arial, sans-serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  font-weight: 800;
+  gap: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+          color 220ms ease,
+          background 220ms ease,
+          border-color 220ms ease,
+          transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  span:last-child {
+    font-size: 1.7rem;
+    font-weight: 200;
+    line-height: 0.7;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover {
+    border-color: #100a5b;
+    background: #100a5b;
+    color: #ffffff;
+    transform: translateY(-0.18rem) scale(1.015);
+
+    span:last-child {
+      transform: translateX(0.25rem);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
+}
+
+@keyframes ellipse-large-breathe {
+  0% {
+    opacity: 0.88;
+    transform: translate(-50%, -50%) scale(0.995);
+  }
+
+  100% {
+    opacity: 0.94;
+    transform: translate(-50%, -50%) scale(1.025);
+  }
+}
+
+@keyframes ellipse-small-breathe {
+  0% {
+    opacity: 0.68;
+    transform: translate(-50%, -50%) scale(1.01);
+  }
+
+  100% {
+    opacity: 0.76;
+    transform: translate(-50%, -50%) scale(0.985);
+  }
+}
+
+@media (width <= 88rem) {
+  .contactPanel {
+    grid-template-columns: minmax(0, 0.8fr) minmax(36rem, 1.2fr);
+  }
+
+  .radialStage {
+    --ellipse-center-x: 13vw;
+    --ellipse-center-y: 62svh;
+
+    --ellipse-large-width: 72rem;
+    --ellipse-large-height: 72rem;
+
+    --ellipse-small-width: 54rem;
+    --ellipse-small-height: 54rem;
+  }
+
+  .contentGrid {
+    grid-template-columns:
+            minmax(11rem, 0.85fr)
+            minmax(8rem, 0.5fr)
+            minmax(13rem, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .statement {
+    font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  }
+
+  .footerNav a,
+  .address {
+    font-size: clamp(0.95rem, 1.25vw, 1.2rem);
+  }
+}
+
+@media (width <= 72rem) {
+  .contactPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .radialStage {
+    --ellipse-center-x: 12rem;
+    --ellipse-center-y: 38svh;
+
+    --ellipse-large-width: 58rem;
+    --ellipse-large-height: 58rem;
+
+    --ellipse-small-width: 43rem;
+    --ellipse-small-height: 43rem;
+  }
+
+  .visualColumn {
+    min-height: 70svh;
+    padding:
+            calc(var(--header-height) + 3rem)
+            var(--page-padding)
+            4rem;
+  }
+
+  .visualContent {
+    width: min(100%, 42rem);
+    margin-top: 0;
+  }
+
+  .heading {
+    line-height: 1.18;
+  }
+  
+
+  .contentColumn {
+    min-height: auto;
+    padding:
+            4rem
+            var(--page-padding)
+            3rem;
+  }
+
+  .logoMark {
+    width: min(100%, 18rem);
+    margin-inline: 0;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+
+  .statement,
+  .address p {
+    max-width: 100%;
+  }
+
+  .footerNav {
+    gap: 1.25rem;
+  }
+
+  .consultationButton {
+    margin-left: 0;
+  }
+}
+
+@media (width <= 44rem) {
+  .radialStage {
+    --ellipse-center-x: 8rem;
+    --ellipse-center-y: 36svh;
+
+    --ellipse-large-width: 48rem;
+    --ellipse-large-height: 48rem;
+
+    --ellipse-small-width: 35rem;
+    --ellipse-small-height: 35rem;
+  }
+
+  .visualColumn {
+    min-height: 62svh;
+  }
+
+  .eyebrowGroup {
+    gap: 1rem;
+  }
+
+  .eyebrowLine {
+    width: 4rem;
+  }
+
+  .heading {
+    max-width: 100%;
+    margin-top: 2.5rem;
+    font-size: clamp(3rem, 15vw, 4.7rem);
+  }
+
+  .address {
+    font-size: 1.05rem;
+    line-height: 1.15;
+  }
+
+  .consultationButton {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ellipseLarge,
+  .ellipseSmall {
+    animation: none;
+  }
+
+  .footerNav a,
+  .consultationButton,
+  .consultationButton span:last-child {
+    transition: none;
+  }
+
+  .footerNav a:hover,
+  .consultationButton:hover,
+  .consultationButton:active {
+    transform: none;
+  }
+
+  .consultationButton:hover span:last-child {
+    transform: none;
+  }
+}
