@@ -332,11 +332,15 @@
   .workflowHeading {
     font-size: clamp(3.3rem, 5.5vw, 5.3rem);
   }
+
+  .expertisePanel {
+    padding: 0;
+  }
 }
 
 @media (width <= 62rem) {
   .expertisePanel {
-    padding-inline: var(--page-padding);
+    padding: 0;
   }
 
   .workflowPanel {
@@ -355,10 +359,7 @@
 @media (width <= 44rem) {
   .expertisePanel {
     min-height: auto;
-    padding:
-            calc(var(--header-height) + 2rem)
-            var(--page-padding)
-            2rem;
+    padding: 0
   }
 
   .backgroundGlow {
@@ -368,10 +369,8 @@
   }
 
   .intro {
-    padding:
-            2rem
-            0
-            1rem;
+    padding: 1.2rem;
+    text-align: center;
   }
 
   .introHeading {

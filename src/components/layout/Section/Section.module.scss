@@ -3,7 +3,7 @@
   isolation: isolate;
   display: flex;
   width: 100%;
-  overflow: clip;
+  overflow: visible;
   padding-block: var(--section-spacing);
 }
 
@@ -74,6 +74,11 @@
 
 @media (width <= 48rem) {
   .snapSection {
+    scroll-snap-align: none;
     scroll-snap-stop: normal;
+  }
+
+  .fullHeight {
+    min-height: auto;
   }
 }

@@ -18,9 +18,69 @@
   display: grid;
   width: 100%;
   min-height: 100svh;
-  overflow: visible;
-  background: #f7f7f6;
+  overflow: hidden;
+  background:
+          radial-gradient(
+                          circle at 16% 58%,
+                          rgb(42 24 124 / 24%) 0%,
+                          rgb(42 24 124 / 14%) 24%,
+                          transparent 48%
+          ),
+          linear-gradient(
+                          115deg,
+                          #f7f7f6 0%,
+                          #f0eefb 38%,
+                          #f7f7f6 72%
+          );
   grid-template-columns: minmax(0, 0.92fr) minmax(42rem, 1.08fr);
+
+  &::before,
+  &::after {
+    position: absolute;
+    z-index: 0;
+    content: "";
+    border-radius: 999px;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  &::before {
+    top: -24rem;
+    left: -30rem;
+    width: 92rem;
+    height: 92rem;
+    background:
+            radial-gradient(
+                            circle at 50% 50%,
+                            rgb(62 35 165 / 62%) 0%,
+                            rgb(86 61 207 / 44%) 22%,
+                            rgb(151 126 255 / 28%) 44%,
+                            transparent 70%
+            );
+    filter: blur(0.8rem);
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    animation: premium-gradient-drift 7s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  &::after {
+    top: 4rem;
+    left: -14rem;
+    width: 66rem;
+    height: 66rem;
+    background:
+            radial-gradient(
+                            circle at 50% 50%,
+                            rgb(255 255 255 / 68%) 0%,
+                            rgb(184 171 255 / 38%) 28%,
+                            rgb(16 10 91 / 26%) 54%,
+                            transparent 74%
+            );
+    filter: blur(1rem);
+    opacity: 0.95;
+    transform: translate3d(0, 0, 0) scale(1);
+    animation: premium-gradient-float 6s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
 }
 
 .radialStage {
@@ -42,9 +102,31 @@
 
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   overflow: visible;
   pointer-events: none;
+
+  &::before {
+    position: absolute;
+    top: var(--ellipse-center-y);
+    left: var(--ellipse-center-x);
+    width: 48rem;
+    height: 48rem;
+    border-radius: 999px;
+    background:
+            radial-gradient(
+                            circle,
+                            rgb(255 255 255 / 50%) 0%,
+                            rgb(154 132 255 / 38%) 28%,
+                            rgb(67 39 170 / 30%) 54%,
+                            transparent 72%
+            );
+    content: "";
+    filter: blur(0.9rem);
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    animation: gradient-glow-orbit 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
 }
 
 .ellipse {
@@ -63,9 +145,9 @@
   z-index: 0;
   width: var(--ellipse-large-width);
   height: var(--ellipse-large-height);
-  opacity: 0.92;
+  opacity: 0.94;
   transform: translate(-50%, -50%);
-  animation: ellipse-large-breathe 26s
+  animation: ellipse-large-breathe 9s
   cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
 }
 
@@ -75,15 +157,15 @@
   z-index: 1;
   width: var(--ellipse-small-width);
   height: var(--ellipse-small-height);
-  opacity: 0.72;
+  opacity: 0.86;
   transform: translate(-50%, -50%);
-  animation: ellipse-small-breathe 22s
+  animation: ellipse-small-breathe 8s
   cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
 }
 
 .visualColumn {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   min-height: 100svh;
   overflow: visible;
@@ -132,7 +214,7 @@
 
 .contentColumn {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   min-height: 100svh;
   flex-direction: column;
@@ -145,7 +227,7 @@
 
 .logoMark {
   display: block;
-  width:  20rem;
+  width: 20rem;
   height: auto;
   margin-inline: auto;
   object-fit: contain;
@@ -281,6 +363,72 @@
   }
 }
 
+@keyframes premium-gradient-drift {
+  0% {
+    opacity: 0.82;
+    transform: translate3d(-3rem, 2rem, 0) scale(0.98);
+  }
+
+  35% {
+    opacity: 1;
+    transform: translate3d(3rem, -2rem, 0) scale(1.04);
+  }
+
+  70% {
+    opacity: 0.92;
+    transform: translate3d(7rem, 3rem, 0) scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(2rem, -5rem, 0) scale(1.12);
+  }
+}
+
+@keyframes premium-gradient-float {
+  0% {
+    opacity: 0.62;
+    transform: translate3d(2rem, -1rem, 0) scale(0.96);
+  }
+
+  40% {
+    opacity: 0.9;
+    transform: translate3d(-4rem, 3rem, 0) scale(1.05);
+  }
+
+  75% {
+    opacity: 0.78;
+    transform: translate3d(4rem, 5rem, 0) scale(1.02);
+  }
+
+  100% {
+    opacity: 0.95;
+    transform: translate3d(8rem, -2rem, 0) scale(1.1);
+  }
+}
+
+@keyframes gradient-glow-orbit {
+  0% {
+    opacity: 0.62;
+    transform: translate(-55%, -45%) scale(0.94);
+  }
+
+  33% {
+    opacity: 0.95;
+    transform: translate(-44%, -56%) scale(1.04);
+  }
+
+  66% {
+    opacity: 0.74;
+    transform: translate(-38%, -42%) scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-48%, -60%) scale(1.14);
+  }
+}
+
 @keyframes ellipse-large-breathe {
   0% {
     opacity: 0.88;
@@ -288,19 +436,19 @@
   }
 
   100% {
-    opacity: 0.94;
+    opacity: 0.96;
     transform: translate(-50%, -50%) scale(1.025);
   }
 }
 
 @keyframes ellipse-small-breathe {
   0% {
-    opacity: 0.68;
+    opacity: 0.72;
     transform: translate(-50%, -50%) scale(1.01);
   }
 
   100% {
-    opacity: 0.76;
+    opacity: 0.84;
     transform: translate(-50%, -50%) scale(0.985);
   }
 }
@@ -342,21 +490,59 @@
 @media (width <= 72rem) {
   .contactPanel {
     grid-template-columns: 1fr;
+    background:
+            radial-gradient(
+                            circle at 30% 26%,
+                            rgb(42 24 124 / 32%) 0%,
+                            rgb(42 24 124 / 18%) 28%,
+                            transparent 58%
+            ),
+            radial-gradient(
+                            circle at 75% 18%,
+                            rgb(184 171 255 / 28%) 0%,
+                            transparent 42%
+            ),
+            linear-gradient(
+                            160deg,
+                            #f0eefb 0%,
+                            #f7f7f6 62%,
+                            #f7f7f6 100%
+            );
   }
 
   .radialStage {
-    --ellipse-center-x: 12rem;
-    --ellipse-center-y: 38svh;
+    --ellipse-center-x: 50%;
+    --ellipse-center-y: 28svh;
 
-    --ellipse-large-width: 58rem;
-    --ellipse-large-height: 58rem;
+    --ellipse-large-width: 78rem;
+    --ellipse-large-height: 78rem;
 
-    --ellipse-small-width: 43rem;
-    --ellipse-small-height: 43rem;
+    --ellipse-small-width: 58rem;
+    --ellipse-small-height: 58rem;
+
+    overflow: hidden;
+    mask-image: linear-gradient(
+                    to bottom,
+                    #000 0%,
+                    #000 62%,
+                    transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+                    to bottom,
+                    #000 0%,
+                    #000 62%,
+                    transparent 100%
+    );
+  }
+
+  .radialStage::before {
+    width: 64rem;
+    height: 64rem;
   }
 
   .visualColumn {
     min-height: 70svh;
+    justify-content: center;
     padding:
             calc(var(--header-height) + 3rem)
             var(--page-padding)
@@ -371,10 +557,11 @@
   .heading {
     line-height: 1.18;
   }
-  
 
   .contentColumn {
     min-height: auto;
+    align-items: center;
+    text-align: center;
     padding:
             4rem
             var(--page-padding)
@@ -383,11 +570,13 @@
 
   .logoMark {
     width: min(100%, 18rem);
-    margin-inline: 0;
+    margin-top: 15rem;
+    margin-inline: auto;
   }
 
   .contentGrid {
     grid-template-columns: 1fr;
+    justify-items: center;
     gap: 2.75rem;
   }
 
@@ -397,24 +586,74 @@
   }
 
   .footerNav {
+    align-items: center;
     gap: 1.25rem;
   }
 
+  .address {
+    align-items: center;
+    text-align: center;
+  }
+
   .consultationButton {
-    margin-left: 0;
+    margin-inline: auto;
   }
 }
 
 @media (width <= 44rem) {
+  .contactPanel {
+    background:
+            radial-gradient(
+                            circle at 34% 22%,
+                            rgb(42 24 124 / 36%) 0%,
+                            rgb(42 24 124 / 20%) 30%,
+                            transparent 62%
+            ),
+            radial-gradient(
+                            circle at 80% 12%,
+                            rgb(184 171 255 / 32%) 0%,
+                            transparent 45%
+            ),
+            linear-gradient(
+                            165deg,
+                            #f0eefb 0%,
+                            #f7f7f6 68%,
+                            #f7f7f6 100%
+            );
+  }
+
   .radialStage {
-    --ellipse-center-x: 8rem;
-    --ellipse-center-y: 36svh;
+    --ellipse-center-x: 50%;
+    --ellipse-center-y: 25svh;
 
-    --ellipse-large-width: 48rem;
-    --ellipse-large-height: 48rem;
+    --ellipse-large-width: 66rem;
+    --ellipse-large-height: 66rem;
 
-    --ellipse-small-width: 35rem;
-    --ellipse-small-height: 35rem;
+    --ellipse-small-width: 48rem;
+    --ellipse-small-height: 48rem;
+
+    mask-image: linear-gradient(
+                    to bottom,
+                    #000 0%,
+                    #000 58%,
+                    transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+                    to bottom,
+                    #000 0%,
+                    #000 58%,
+                    transparent 100%
+    );
+  }
+
+  .radialStage::before {
+    width: 52rem;
+    height: 52rem;
+  }
+
+  .contentColumn {
+    align-items: center;
+    text-align: center;
   }
 
   .visualColumn {
@@ -422,6 +661,7 @@
   }
 
   .eyebrowGroup {
+    justify-content: center;
     gap: 1rem;
   }
 
@@ -436,16 +676,22 @@
   }
 
   .address {
+    align-items: center;
     font-size: 1.05rem;
     line-height: 1.15;
+    text-align: center;
   }
 
   .consultationButton {
     width: 100%;
+    margin-inline: auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .contactPanel::before,
+  .contactPanel::after,
+  .radialStage::before,
   .ellipseLarge,
   .ellipseSmall {
     animation: none;
