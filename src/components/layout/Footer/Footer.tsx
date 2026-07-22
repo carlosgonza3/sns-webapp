@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import { Container } from '@/components/layout/Container/Container';
-
 import styles from './Footer.module.scss';
 
 export function Footer() {
@@ -9,7 +7,7 @@ export function Footer() {
 
     return (
         <footer className={styles.footer}>
-            <Container className={styles.container}>
+            <div className={styles.container}>
                 <p>© {currentYear} SNS. All rights reserved.</p>
 
                 <nav
@@ -21,7 +19,7 @@ export function Footer() {
                     <Link to="/packages">Packages</Link>
                     <Link to="/#contact">Contact</Link>
                 </nav>
-            </Container>
+            </div>
         </footer>
     );
 }

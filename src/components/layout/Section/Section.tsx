@@ -36,7 +36,6 @@ export function Section({
                         }: SectionProps) {
     const sectionClassName = [
         styles.section,
-        snap ? styles.snapSection : '',
         fullHeight ? styles.fullHeight : '',
         className,
     ]

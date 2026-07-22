@@ -26,11 +26,6 @@
   pointer-events: none;
 }
 
-.snapSection {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
 .fullHeight {
   width: 100%;
   min-height: 100svh;
@@ -73,11 +68,6 @@
 }
 
 @media (width <= 48rem) {
-  .snapSection {
-    scroll-snap-align: none;
-    scroll-snap-stop: normal;
-  }
-
   .fullHeight {
     min-height: auto;
   }

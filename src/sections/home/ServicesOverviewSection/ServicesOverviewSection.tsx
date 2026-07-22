@@ -6,22 +6,18 @@ const services = [
     {
         title: 'Accounting Operations',
         dot: 'peach',
-        featured: false,
     },
     {
         title: 'Compliance Services',
         dot: 'purple',
-        featured: false,
     },
     {
         title: 'Financial Advisory',
         dot: 'purple',
-        featured: true,
     },
     {
         title: 'Technology & Automation',
         dot: 'peach',
-        featured: false,
     },
 ] as const;
 
@@ -47,7 +43,6 @@ export function ServicesOverviewSection() {
             className={styles.section}
             contentClassName={styles.sectionContent}
             contained={false}
-            snap
             fullHeight
         >
             <div className={styles.servicesPanel}>
@@ -75,18 +70,10 @@ export function ServicesOverviewSection() {
                         ({
                              title,
                              dot,
-                             featured,
                          }) => (
                             <article
                                 key={title}
-                                className={[
-                                    styles.serviceCard,
-                                    featured
-                                        ? styles.serviceCardFeatured
-                                        : '',
-                                ]
-                                    .filter(Boolean)
-                                    .join(' ')}
+                                className={styles.serviceCard}
                                 data-snap-reveal
                             >
                                 <span

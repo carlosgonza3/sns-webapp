@@ -1,6 +1,5 @@
 import {
     type ReactNode,
-    useEffect,
     useRef,
 } from 'react';
 
@@ -47,30 +46,6 @@ export function SnapPage({
     const pageRef = useRef<HTMLDivElement>(null);
     const prefersReducedMotion = usePrefersReducedMotion();
 
-    useEffect(() => {
-        const desktopSnapQuery = window.matchMedia(DESKTOP_SNAP_QUERY);
-
-        const updateSnapClass = () => {
-            document.documentElement.classList.toggle(
-                'snapScrollEnabled',
-                desktopSnapQuery.matches,
-            );
-        };
-
-        updateSnapClass();
-
-        desktopSnapQuery.addEventListener('change', updateSnapClass);
-
-        return () => {
-            desktopSnapQuery.removeEventListener(
-                'change',
-                updateSnapClass,
-            );
-
-            document.documentElement.classList.remove('snapScrollEnabled');
-        };
-    }, []);
-
     useGSAP(
         () => {
             const pageElement = pageRef.current;
@@ -85,6 +60,37 @@ export function SnapPage({
                 '[data-snap-section]',
                 pageElement,
             );
+
+            if (
+                isDesktop &&
+                !prefersReducedMotion &&
+                sections.length >= 2
+            ) {
+                const firstSection = sections[0];
+                const secondSection = sections[1];
+
+                ScrollTrigger.create({
+                    trigger: firstSection,
+                    start: 'top top',
+                    end: () =>
+                        `+=${Math.max(
+                            1,
+                            secondSection.offsetTop -
+                            firstSection.offsetTop,
+                        )}`,
+                    invalidateOnRefresh: true,
+                    snap: {
+                        snapTo: [0, 1],
+                        delay: 0.08,
+                        duration: {
+                            min: 0.25,
+                            max: 0.55,
+                        },
+                        ease: 'power2.inOut',
+                        inertia: false,
+                    },
+                });
+            }
 
             sections.forEach((section) => {
                 const revealElements = gsap.utils.toArray<HTMLElement>(

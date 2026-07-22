@@ -37,7 +37,6 @@ export function ContactFinalSection() {
             className={styles.section}
             contentClassName={styles.sectionContent}
             contained={false}
-            snap
             fullHeight
         >
             <div className={styles.contactPanel}>
