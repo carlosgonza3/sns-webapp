@@ -508,18 +508,25 @@
                             #f7f7f6 62%,
                             #f7f7f6 100%
             );
+
+    &::before,
+    &::after {
+      display: none;
+    }
   }
 
   .radialStage {
     --ellipse-center-x: 50%;
-    --ellipse-center-y: 28svh;
+    --ellipse-center-y: 32svh;
 
-    --ellipse-large-width: 78rem;
-    --ellipse-large-height: 78rem;
+    --ellipse-large-width: clamp(42rem, 108vw, 62rem);
+    --ellipse-large-height: clamp(42rem, 108vw, 62rem);
 
-    --ellipse-small-width: 58rem;
-    --ellipse-small-height: 58rem;
+    --ellipse-small-width: clamp(32rem, 82vw, 48rem);
+    --ellipse-small-height: clamp(32rem, 82vw, 48rem);
 
+    height: 70svh;
+    inset: 0 0 auto;
     overflow: hidden;
     mask-image: linear-gradient(
                     to bottom,
@@ -536,8 +543,8 @@
   }
 
   .radialStage::before {
-    width: 64rem;
-    height: 64rem;
+    width: clamp(34rem, 88vw, 52rem);
+    height: clamp(34rem, 88vw, 52rem);
   }
 
   .visualColumn {
@@ -555,6 +562,8 @@
   }
 
   .heading {
+    max-width: 38rem;
+    font-size: clamp(3rem, 7vw, 4rem);
     line-height: 1.18;
   }
 
@@ -569,8 +578,8 @@
   }
 
   .logoMark {
-    width: min(100%, 18rem);
-    margin-top: 15rem;
+    width: min(100%, 13rem);
+    margin-top: 0;
     margin-inline: auto;
   }
 
@@ -578,6 +587,7 @@
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 2.75rem;
+    margin-top: 3rem;
   }
 
   .statement,
@@ -624,14 +634,15 @@
 
   .radialStage {
     --ellipse-center-x: 50%;
-    --ellipse-center-y: 25svh;
+    --ellipse-center-y: 31svh;
 
-    --ellipse-large-width: 66rem;
-    --ellipse-large-height: 66rem;
+    --ellipse-large-width: clamp(30rem, 132vw, 36rem);
+    --ellipse-large-height: clamp(30rem, 132vw, 36rem);
 
-    --ellipse-small-width: 48rem;
-    --ellipse-small-height: 48rem;
+    --ellipse-small-width: clamp(23rem, 102vw, 29rem);
+    --ellipse-small-height: clamp(23rem, 102vw, 29rem);
 
+    height: 68svh;
     mask-image: linear-gradient(
                     to bottom,
                     #000 0%,
@@ -647,17 +658,22 @@
   }
 
   .radialStage::before {
-    width: 52rem;
-    height: 52rem;
+    width: clamp(25rem, 112vw, 32rem);
+    height: clamp(25rem, 112vw, 32rem);
   }
 
   .contentColumn {
     align-items: center;
+    padding: 3rem var(--page-padding) 2.5rem;
     text-align: center;
   }
 
   .visualColumn {
-    min-height: 62svh;
+    min-height: 68svh;
+    padding:
+            calc(var(--header-height) + 1.5rem)
+            var(--page-padding)
+            2.5rem;
   }
 
   .eyebrowGroup {
@@ -666,25 +682,54 @@
   }
 
   .eyebrowLine {
-    width: 4rem;
+    width: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .eyebrowGroup p {
+    font-size: clamp(0.72rem, 3vw, 0.9rem);
   }
 
   .heading {
-    max-width: 100%;
+    max-width: 22rem;
+    margin: clamp(2rem, 6vh, 3rem) auto 0;
+    font-size: clamp(2.25rem, 10.5vw, 3.15rem);
+    letter-spacing: -0.045em;
+    line-height: 1.16;
+  }
+
+  .logoMark {
+    width: min(48vw, 10.5rem);
+  }
+
+  .contentGrid {
+    gap: 2.25rem;
     margin-top: 2.5rem;
-    font-size: clamp(3rem, 15vw, 4.7rem);
+    line-height: normal;
+  }
+
+  .statement {
+    max-width: 30rem;
+    font-size: clamp(1.05rem, 4.8vw, 1.25rem);
+    line-height: 1.55;
+  }
+
+  .footerNav a {
+    font-size: clamp(1rem, 4.5vw, 1.2rem);
   }
 
   .address {
     align-items: center;
-    font-size: 1.05rem;
-    line-height: 1.15;
+    max-width: 24rem;
+    font-size: clamp(0.9rem, 4vw, 1.05rem);
+    line-height: 1.3;
     text-align: center;
   }
 
   .consultationButton {
     width: 100%;
+    margin-top: 3rem;
     margin-inline: auto;
+    font-size: clamp(0.78rem, 3.5vw, 0.95rem);
   }
 }
 

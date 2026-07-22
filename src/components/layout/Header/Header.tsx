@@ -114,6 +114,18 @@ export function Header() {
                     }`}
                     aria-label="Primary navigation"
                 >
+                    <Link
+                        className={styles.mobileMenuLogo}
+                        to="/"
+                        aria-label="SNS home"
+                        onClick={closeMenu}
+                    >
+                        <img
+                            src={logo}
+                            alt="SNS"
+                        />
+                    </Link>
+
                     {navigationItems.map(
                         ({ label, to, end }) => (
                             <NavLink

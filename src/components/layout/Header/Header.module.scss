@@ -132,6 +132,10 @@
   display: none;
 }
 
+.mobileMenuLogo {
+  display: none;
+}
+
 .menuButton {
   display: none;
   width: 2.75rem;
@@ -171,6 +175,10 @@
     justify-content: space-between;
   }
 
+  .logoLink {
+    display: none;
+  }
+
   .desktopCta {
     display: none;
   }
@@ -179,11 +187,12 @@
     position: relative;
     z-index: 1002;
     display: inline-flex;
+    margin-left: auto;
   }
 
   .navigation {
     position: fixed;
-    top: var(--header-height);
+    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
@@ -193,7 +202,10 @@
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
-    padding: 2.5rem var(--page-padding);
+    padding:
+            calc(var(--header-height) + 2.5rem)
+            var(--page-padding)
+            2.5rem;
     background:
             radial-gradient(
                             circle at 100% 100%,
@@ -213,6 +225,22 @@
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+  }
+
+  .mobileMenuLogo {
+    position: absolute;
+    top: calc((var(--header-height) - 3rem) / 2);
+    left: var(--page-padding);
+    display: inline-flex;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
   }
 
   .navigationLink {
