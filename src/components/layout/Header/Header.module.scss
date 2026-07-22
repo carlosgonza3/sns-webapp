@@ -40,6 +40,12 @@
   opacity: 0;
 }
 
+@media (width <= 56rem) {
+  .logoHome {
+    opacity: 1;
+  }
+}
+
 .navigation {
   display: flex;
   align-items: center;

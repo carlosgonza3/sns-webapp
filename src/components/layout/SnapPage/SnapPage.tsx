@@ -18,7 +18,7 @@ type SnapPageProps = {
     className?: string;
 };
 
-const DESKTOP_SNAP_QUERY = '(min-width: 48.01rem)';
+const DESKTOP_SNAP_QUERY = '(min-width: 56.01rem)';
 
 function showRevealElements(elements: HTMLElement[]) {
     gsap.to(elements, {
@@ -54,18 +54,22 @@ export function SnapPage({
                 return;
             }
 
-            const isDesktop = window.matchMedia(DESKTOP_SNAP_QUERY).matches;
-
             const sections = gsap.utils.toArray<HTMLElement>(
                 '[data-snap-section]',
                 pageElement,
             );
 
-            if (
-                isDesktop &&
-                !prefersReducedMotion &&
-                sections.length >= 2
-            ) {
+            if (prefersReducedMotion) {
+                return;
+            }
+
+            const desktopContext = gsap.matchMedia();
+
+            desktopContext.add(DESKTOP_SNAP_QUERY, () => {
+                if (sections.length < 2) {
+                    return;
+                }
+
                 const firstSection = sections[0];
                 const secondSection = sections[1];
 
@@ -90,51 +94,44 @@ export function SnapPage({
                         inertia: false,
                     },
                 });
-            }
+                sections.forEach((section) => {
+                    const revealElements = gsap.utils.toArray<HTMLElement>(
+                        '[data-snap-reveal]',
+                        section,
+                    );
 
-            sections.forEach((section) => {
-                const revealElements = gsap.utils.toArray<HTMLElement>(
-                    '[data-snap-reveal]',
-                    section,
-                );
+                    if (revealElements.length === 0) {
+                        return;
+                    }
 
-                if (revealElements.length === 0) {
-                    return;
-                }
+                    resetRevealElements(revealElements);
 
-                if (prefersReducedMotion || !isDesktop) {
-                    gsap.set(revealElements, {
-                        autoAlpha: 1,
-                        y: 0,
-                        clearProps: 'visibility',
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: 'top 70%',
+                        end: 'bottom 20%',
+                        invalidateOnRefresh: true,
+                        onEnter: () => {
+                            showRevealElements(revealElements);
+                        },
+                        onEnterBack: () => {
+                            showRevealElements(revealElements);
+                        },
+                        onLeave: () => {
+                            resetRevealElements(revealElements);
+                        },
+                        onLeaveBack: () => {
+                            resetRevealElements(revealElements);
+                        },
                     });
-
-                    return;
-                }
-
-                resetRevealElements(revealElements);
-
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: 'top 70%',
-                    end: 'bottom 20%',
-                    invalidateOnRefresh: true,
-                    onEnter: () => {
-                        showRevealElements(revealElements);
-                    },
-                    onEnterBack: () => {
-                        showRevealElements(revealElements);
-                    },
-                    onLeave: () => {
-                        resetRevealElements(revealElements);
-                    },
-                    onLeaveBack: () => {
-                        resetRevealElements(revealElements);
-                    },
                 });
+
+                ScrollTrigger.refresh();
             });
 
-            ScrollTrigger.refresh();
+            return () => {
+                desktopContext.revert();
+            };
         },
         {
             scope: pageRef,

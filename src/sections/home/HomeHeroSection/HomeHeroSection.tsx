@@ -1,6 +1,7 @@
 import {
     useEffect,
     useRef,
+    useState,
 } from 'react';
 
 import { useGSAP } from '@gsap/react';
@@ -17,6 +18,8 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import styles from './HomeHeroSection.module.scss';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+const DESKTOP_HERO_QUERY = '(min-width: 56.01rem)';
 
 type ElementBounds = {
     top: number;
@@ -52,8 +55,37 @@ export function HomeHeroSection() {
     const floatingLogoRef = useRef<HTMLImageElement>(null);
 
     const prefersReducedMotion = usePrefersReducedMotion();
+    const [isDesktopHero, setIsDesktopHero] = useState(() =>
+        window.matchMedia(DESKTOP_HERO_QUERY).matches,
+    );
 
     useEffect(() => {
+        const desktopQuery = window.matchMedia(
+            DESKTOP_HERO_QUERY,
+        );
+
+        const handleBreakpointChange = () => {
+            setIsDesktopHero(desktopQuery.matches);
+        };
+
+        desktopQuery.addEventListener(
+            'change',
+            handleBreakpointChange,
+        );
+
+        return () => {
+            desktopQuery.removeEventListener(
+                'change',
+                handleBreakpointChange,
+            );
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isDesktopHero) {
+            return;
+        }
+
         const htmlElement = document.documentElement;
         const bodyElement = document.body;
 
@@ -73,7 +105,7 @@ export function HomeHeroSection() {
             bodyElement.style.overscrollBehaviorY =
                 previousBodyOverscroll;
         };
-    }, []);
+    }, [isDesktopHero]);
 
     useGSAP(
         () => {
@@ -98,6 +130,22 @@ export function HomeHeroSection() {
                 !headerLogo ||
                 !headerTarget
             ) {
+                return;
+            }
+
+            if (!isDesktopHero) {
+                gsap.set(sourceLogo, {
+                    autoAlpha: 1,
+                });
+
+                gsap.set(headerLogo, {
+                    autoAlpha: 1,
+                });
+
+                gsap.set(floatingLogo, {
+                    autoAlpha: 0,
+                });
+
                 return;
             }
 
@@ -352,7 +400,7 @@ export function HomeHeroSection() {
         },
         {
             scope: sectionRef,
-            dependencies: [prefersReducedMotion],
+            dependencies: [prefersReducedMotion, isDesktopHero],
             revertOnUpdate: true,
         },
     );
