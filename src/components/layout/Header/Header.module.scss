@@ -177,6 +177,9 @@
 
   .logoLink {
     display: none;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
   }
 
   .desktopCta {

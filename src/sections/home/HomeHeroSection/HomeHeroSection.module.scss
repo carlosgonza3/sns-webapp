@@ -561,6 +561,10 @@
 }
 
 @media (width <= 56rem) {
+  .floatingLogo {
+    display: none !important;
+  }
+
   .heroGrid {
     align-content: center;
     grid-template-columns: 1fr;

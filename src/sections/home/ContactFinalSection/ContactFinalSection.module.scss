@@ -528,23 +528,39 @@
     height: 70svh;
     inset: 0 0 auto;
     overflow: hidden;
+    background:
+            radial-gradient(
+                            ellipse 76% 68% at 42% 42%,
+                            rgb(82 57 112 / 72%) 0%,
+                            rgb(117 94 142 / 58%) 34%,
+                            rgb(189 180 221 / 38%) 62%,
+                            transparent 100%
+            ),
+            radial-gradient(
+                            ellipse 58% 54% at 68% 35%,
+                            rgb(166 151 232 / 30%) 0%,
+                            transparent 100%
+            );
     mask-image: linear-gradient(
                     to bottom,
                     #000 0%,
-                    #000 62%,
+                    #000 54%,
                     transparent 100%
     );
     -webkit-mask-image: linear-gradient(
                     to bottom,
                     #000 0%,
-                    #000 62%,
+                    #000 54%,
                     transparent 100%
     );
   }
 
+  .ellipse {
+    display: none;
+  }
+
   .radialStage::before {
-    width: clamp(34rem, 88vw, 52rem);
-    height: clamp(34rem, 88vw, 52rem);
+    display: none;
   }
 
   .visualColumn {
@@ -612,64 +628,55 @@
 
 @media (width <= 44rem) {
   .contactPanel {
-    background:
-            radial-gradient(
-                            circle at 34% 22%,
-                            rgb(42 24 124 / 36%) 0%,
-                            rgb(42 24 124 / 20%) 30%,
-                            transparent 62%
-            ),
-            radial-gradient(
-                            circle at 80% 12%,
-                            rgb(184 171 255 / 32%) 0%,
-                            transparent 45%
-            ),
-            linear-gradient(
-                            165deg,
-                            #f0eefb 0%,
-                            #f7f7f6 68%,
-                            #f7f7f6 100%
-            );
+    background: #f7f7f6;
   }
 
   .radialStage {
     --ellipse-center-x: 50%;
-    --ellipse-center-y: 31svh;
+    --ellipse-center-y: 28svh;
 
-    --ellipse-large-width: clamp(30rem, 132vw, 36rem);
-    --ellipse-large-height: clamp(30rem, 132vw, 36rem);
+    --ellipse-large-width: clamp(26rem, 112vw, 31rem);
+    --ellipse-large-height: clamp(26rem, 112vw, 31rem);
 
-    --ellipse-small-width: clamp(23rem, 102vw, 29rem);
-    --ellipse-small-height: clamp(23rem, 102vw, 29rem);
+    --ellipse-small-width: clamp(20rem, 86vw, 25rem);
+    --ellipse-small-height: clamp(20rem, 86vw, 25rem);
 
-    height: 68svh;
+    height: 64svh;
+    background:
+            radial-gradient(
+                            ellipse 90% 84% at 43% 44%,
+                            rgb(83 59 108 / 74%) 0%,
+                            rgb(119 96 140 / 58%) 36%,
+                            rgb(194 185 222 / 38%) 72%,
+                            transparent 100%
+            ),
+            radial-gradient(
+                            ellipse 54% 48% at 75% 38%,
+                            rgb(175 160 239 / 30%) 0%,
+                            transparent 100%
+            );
     mask-image: linear-gradient(
                     to bottom,
                     #000 0%,
-                    #000 58%,
+                    #000 72%,
                     transparent 100%
     );
     -webkit-mask-image: linear-gradient(
                     to bottom,
                     #000 0%,
-                    #000 58%,
+                    #000 72%,
                     transparent 100%
     );
   }
 
-  .radialStage::before {
-    width: clamp(25rem, 112vw, 32rem);
-    height: clamp(25rem, 112vw, 32rem);
-  }
-
   .contentColumn {
     align-items: center;
-    padding: 3rem var(--page-padding) 2.5rem;
+    padding: 2.25rem var(--page-padding) 2.5rem;
     text-align: center;
   }
 
   .visualColumn {
-    min-height: 68svh;
+    min-height: 64svh;
     padding:
             calc(var(--header-height) + 1.5rem)
             var(--page-padding)
@@ -698,7 +705,7 @@
   }
 
   .logoMark {
-    width: min(48vw, 10.5rem);
+    width: min(40vw, 8.5rem);
   }
 
   .contentGrid {
