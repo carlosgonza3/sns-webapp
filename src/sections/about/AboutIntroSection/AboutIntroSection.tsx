@@ -4,27 +4,24 @@ import { Section } from '@/components/layout/Section/Section';
 
 import styles from './AboutIntroSection.module.scss';
 
-const placeholderCopy =
-    'Sun Nearshore was created to help growing businesses access enterprise-level financial expertise without the cost and complexity of building an internal finance department. Through a connected ecosystem of people, technology, automation, and strategic leadership, we help organizations operate with greater clarity, efficiency, and confidence.';
-
 const panels = [
     {
         id: 'vision',
         label: 'Vision',
         tone: 'coral',
-        content: placeholderCopy,
+        content: 'To become the most trusted nearshore finance and accounting partner for growth-oriented businesses throughout North America.',
     },
     {
         id: 'mission',
         label: 'Mission',
         tone: 'cream',
-        content: placeholderCopy,
+        content: 'Empowering businesses through intelligent financial operations, strategic advisory, and technology-driven accounting solutions.',
     },
     {
         id: 'about-us',
         label: 'About Us',
         tone: 'lilac',
-        content: placeholderCopy,
+        content: 'Sun Nearshore was created to help growing businesses access enterprise-level financial expertise without the cost and complexity of building an internal finance department. Through a connected ecosystem of people, technology, automation, and strategic leadership, we help organizations operate with greater clarity, efficiency, and confidence.',
     },
 ] as const;
 
