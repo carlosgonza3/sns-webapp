@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Section } from '@/components/layout/Section/Section';
 
 import styles from './PackagesHeroSection.module.scss';
@@ -15,14 +17,17 @@ const packages = [
     {
         number: '01',
         title: 'Essential Accounting',
+        href: '/packages/essential-accounting',
     },
     {
         number: '02',
         title: 'Growth Finance',
+        href: '/packages/growth-finance',
     },
     {
         number: '03',
         title: 'Strategic CFO Package',
+        href: '/packages/strategic-cfo',
     },
 ] as const;
 
@@ -76,14 +81,15 @@ export function PackagesHeroSection() {
 
                     <div className={styles.packageGrid}>
                         {packages.map((packageItem, index) => (
-                            <article
+                            <Link
                                 key={packageItem.number}
                                 className={styles.packageCard}
                                 data-palette={index + 1}
+                                to={packageItem.href}
                             >
                                 <span>{packageItem.number}</span>
                                 <h2>{packageItem.title}</h2>
-                            </article>
+                            </Link>
                         ))}
                     </div>
                 </div>

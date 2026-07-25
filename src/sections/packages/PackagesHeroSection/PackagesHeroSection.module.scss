@@ -150,6 +150,7 @@
   padding: clamp(1.8rem, 3vw, 3rem);
   border-radius: 3.5rem 3.5rem 0 0;
   color: #100f12;
+  text-decoration: none;
   transition:
           box-shadow 420ms ease,
           transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -185,6 +186,13 @@
   &:hover {
     z-index: 2;
     box-shadow: 0 1.5rem 3rem rgb(63 45 65 / 12%);
+    transform: translateY(-0.65rem);
+  }
+
+  &:focus-visible {
+    z-index: 2;
+    outline: 3px solid #100a5b;
+    outline-offset: -0.4rem;
     transform: translateY(-0.65rem);
   }
 }

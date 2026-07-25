@@ -1,12 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { RootLayout } from '@/components/layout/RootLayout/RootLayout';
+import { packageDetails } from '@/content/packages';
 import { serviceDetails } from '@/content/services';
 
 import HomePage from '@/pages/HomePage/HomePage';
 import AboutPage from '@/pages/AboutPage/AboutPage';
 import ServiceDetailPage from '@/pages/ServiceDetailPage/ServiceDetailPage';
 import ServicesPage from '@/pages/ServicesPage/ServicesPage';
+import PackageDetailPage from '@/pages/PackageDetailPage/PackageDetailPage';
 import PackagesPage from '@/pages/PackagesPage/PackagesPage';
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 
@@ -65,6 +67,32 @@ export const router = createBrowserRouter(
                 {
                     path: 'packages',
                     element: <PackagesPage />,
+                },
+                {
+                    path: 'packages/essential-accounting',
+                    element: (
+                        <PackageDetailPage
+                            packageDetail={
+                                packageDetails.essentialAccounting
+                            }
+                        />
+                    ),
+                },
+                {
+                    path: 'packages/growth-finance',
+                    element: (
+                        <PackageDetailPage
+                            packageDetail={packageDetails.growthFinance}
+                        />
+                    ),
+                },
+                {
+                    path: 'packages/strategic-cfo',
+                    element: (
+                        <PackageDetailPage
+                            packageDetail={packageDetails.strategicCfo}
+                        />
+                    ),
                 },
                 {
                     path: '*',
