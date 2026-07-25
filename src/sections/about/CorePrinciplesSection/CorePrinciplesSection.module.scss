@@ -14,6 +14,7 @@
   display: grid;
   width: 100%;
   min-height: 100svh;
+  overflow: hidden;
   align-items: center;
   padding:
           clamp(5rem, 9vh, 8rem)
@@ -68,8 +69,8 @@
 
 .imageStage {
   position: relative;
-  width: min(100%, 22rem);
-  height: clamp(31rem, 62vh, 42rem);
+  width: min(100%, 32rem);
+  height: clamp(40rem, 74vh, 50rem);
   justify-self: center;
 }
 
@@ -78,7 +79,7 @@
   top: 50%;
   left: 50%;
   display: block;
-  width: clamp(13rem, 19.5vw, 18.2rem);
+  width: clamp(31rem, 47.5vw, 43rem);
   height: auto;
   filter: drop-shadow(0 1.2rem 1.6rem rgb(31 16 76 / 16%));
   transform-origin: center;
@@ -251,7 +252,8 @@
   }
 
   .imageStage {
-    height: 34rem;
+    width: min(100%, 28rem);
+    height: 44rem;
   }
 }
 
@@ -267,6 +269,7 @@
   }
 
   .copyColumn {
+    grid-row: 1;
     gap: 1.75rem;
 
     > p {
@@ -277,27 +280,47 @@
   }
 
   .imageStage {
-    width: min(100%, 19rem);
-    height: 28rem;
+    z-index: 1;
+    width: min(100%, 24rem);
+    height: 38rem;
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .principleImage {
-    width: clamp(12.35rem, 55.9vw, 15.6rem);
+    width: clamp(28rem, 130vw, 37rem);
   }
 
   .principlesList {
-    align-items: flex-start;
-    gap: 1.15rem;
+    position: relative;
+    z-index: 2;
+    align-items: center;
+    align-self: center;
+    grid-column: 1;
+    grid-row: 2;
+    gap: 1.3rem;
+    pointer-events: none;
   }
 
   .principleButton,
   .principleButton[aria-pressed='true'] {
     font-size: clamp(1.35rem, 6.5vw, 1.8rem);
-    text-align: left;
+    text-align: center;
+    text-shadow: 0 0.15rem 1rem rgb(20 10 57 / 42%);
+    pointer-events: auto;
+  }
+
+  .principleButton {
+    color: rgb(255 255 255 / 62%);
+
+    &:hover {
+      color: rgb(255 255 255 / 86%);
+    }
   }
 
   .principleButton[aria-pressed='true'] {
-    transform: translateX(0.75rem);
+    color: #ffffff;
+    transform: scale(1.08);
   }
 }
 
