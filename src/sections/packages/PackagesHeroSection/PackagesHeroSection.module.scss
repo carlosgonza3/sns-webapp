@@ -39,6 +39,25 @@
           );
   filter: blur(15px);
   pointer-events: none;
+  transform-origin: center;
+  animation: packages-orb-drift 8s
+  cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes packages-orb-drift {
+  0%,
+  100% {
+    transform: translate3d(4%, -4%, 0) scale(0.96) rotate(-3deg);
+  }
+
+  35% {
+    transform: translate3d(-10%, 5%, 0) scale(1.08) rotate(2deg);
+  }
+
+  68% {
+    transform: translate3d(-3%, 12%, 0) scale(1.02) rotate(5deg);
+  }
 }
 
 .intro {
@@ -219,6 +238,7 @@
     right: -12rem;
     width: 25rem;
     opacity: 0.62;
+    animation-duration: 10s;
   }
 
   .intro {
@@ -276,6 +296,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .gradientOrb {
+    animation: none;
+  }
+
   .packageCard {
     transition: none;
   }
