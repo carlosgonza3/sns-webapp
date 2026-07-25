@@ -1,9 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { RootLayout } from '@/components/layout/RootLayout/RootLayout';
+import { serviceDetails } from '@/content/services';
 
 import HomePage from '@/pages/HomePage/HomePage';
 import AboutPage from '@/pages/AboutPage/AboutPage';
+import ServiceDetailPage from '@/pages/ServiceDetailPage/ServiceDetailPage';
 import ServicesPage from '@/pages/ServicesPage/ServicesPage';
 import PackagesPage from '@/pages/PackagesPage/PackagesPage';
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
@@ -27,6 +29,38 @@ export const router = createBrowserRouter(
                 {
                     path: 'services',
                     element: <ServicesPage />,
+                },
+                {
+                    path: 'services/accounting-operations',
+                    element: (
+                        <ServiceDetailPage
+                            service={serviceDetails.accountingOperations}
+                        />
+                    ),
+                },
+                {
+                    path: 'services/compliance-services',
+                    element: (
+                        <ServiceDetailPage
+                            service={serviceDetails.complianceServices}
+                        />
+                    ),
+                },
+                {
+                    path: 'services/financial-advisory',
+                    element: (
+                        <ServiceDetailPage
+                            service={serviceDetails.financialAdvisory}
+                        />
+                    ),
+                },
+                {
+                    path: 'services/technology-automation',
+                    element: (
+                        <ServiceDetailPage
+                            service={serviceDetails.technologyAutomation}
+                        />
+                    ),
                 },
                 {
                     path: 'packages',

@@ -1,0 +1,329 @@
+.section {
+  width: 100%;
+  min-height: 100svh;
+  padding: 0;
+  background: #ffffff;
+}
+
+.sectionContent {
+  width: 100%;
+  min-height: 100svh;
+}
+
+.detailPanel {
+  display: flex;
+  width: 100%;
+  min-height: 100svh;
+  flex-direction: column;
+  padding:
+          calc(var(--header-height) + clamp(2rem, 5vh, 4rem))
+          clamp(1.5rem, 4vw, 5rem)
+          clamp(2rem, 4vh, 3.5rem);
+  background: #ffffff;
+}
+
+.introduction {
+  display: grid;
+  width: 100%;
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: clamp(2rem, 5vw, 6rem);
+  row-gap: 1.2rem;
+}
+
+.headingBlock {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  > span {
+    width: 5.5rem;
+    height: 1px;
+    background: rgb(23 18 23 / 24%);
+  }
+
+  h1 {
+    margin: 0;
+    color: #151218;
+    font-family: var(--font-telegraf), Arial, sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+}
+
+.copy {
+  display: flex;
+  max-width: 72rem;
+  flex-direction: column;
+  gap: 0.8rem;
+  grid-column: 1;
+  grid-row: 2;
+
+  p {
+    margin: 0;
+    color: #171217;
+    font-family: var(--font-telegraf), Arial, sans-serif;
+    font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+    line-height: 1.7;
+  }
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 9rem;
+  padding: 0.65rem 1.1rem;
+  border: 1px solid #171217;
+  border-radius: 999px;
+  color: #171217;
+  font-family: var(--font-telegraf), Arial, sans-serif;
+  font-size: 0.8rem;
+  gap: 0.55rem;
+  grid-column: 2;
+  grid-row: 2;
+  text-decoration: none;
+  transition:
+          background 220ms ease,
+          color 220ms ease,
+          transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: #100a5b;
+    color: #ffffff;
+    transform: translateY(-0.12rem);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffad8b;
+    outline-offset: 0.25rem;
+  }
+}
+
+.cardStage {
+  display: grid;
+  width: min(94%, 80rem);
+  align-items: end;
+  align-self: center;
+  flex: 1;
+  margin-top: clamp(4rem, 10vh, 8rem);
+  padding-top: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.serviceCard {
+  display: flex;
+  min-width: 0;
+  min-height: clamp(17rem, 32vh, 20.5rem);
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.6rem, 3vw, 2.5rem);
+  border: 0;
+  border-radius: 2.65rem;
+  color: #151218;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transform: translateY(0);
+  transition:
+          box-shadow 480ms ease,
+          filter 480ms ease,
+          transform 580ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &[data-palette='1'] {
+    background: #100a5b;
+    color: #ffffff;
+  }
+
+  &[data-palette='2'] {
+    background: linear-gradient(
+            145deg,
+            #fff8e6 0%,
+            #ffd6c8 52%,
+            #f4f4f3 100%
+    );
+  }
+
+  &[data-palette='3'] {
+    background: linear-gradient(
+            180deg,
+            #f7f3f8 0%,
+            #947296 46%,
+            #5d415e 100%
+    );
+    color: #ffffff;
+  }
+
+  &[data-palette='4'] {
+    background: linear-gradient(145deg, #fff7c7, #fffdf0);
+  }
+
+  &[aria-pressed='true'] {
+    z-index: 2;
+    box-shadow: 0 2.2rem 4rem rgb(49 31 56 / 18%);
+    filter: saturate(1.06);
+    transform: translateY(-2.5rem);
+  }
+
+  &:hover {
+    transform: translateY(-1rem);
+  }
+
+  &[aria-pressed='true']:hover {
+    transform: translateY(-2.7rem);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #ff9b78;
+    outline-offset: 0.3rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-telegraf), Arial, sans-serif;
+    font-size: clamp(2rem, 3vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+
+  ul {
+    margin: 2rem 0 0;
+    padding-left: 1.35rem;
+    font-family: var(--font-telegraf), Arial, sans-serif;
+    font-size: clamp(1rem, 1.35vw, 1.25rem);
+    line-height: 1.65;
+    list-style: disc;
+  }
+
+  li {
+    display: list-item;
+  }
+}
+
+.indicators {
+  display: grid;
+  width: min(94%, 80rem);
+  align-self: center;
+  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: clamp(1rem, 2vw, 1.8rem);
+
+  span {
+    width: 3.2rem;
+    aspect-ratio: 1;
+    justify-self: center;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    background: #d7d7d7;
+    transition:
+            background 300ms ease,
+            border-color 300ms ease;
+
+    &[data-active='true'] {
+      border-color: #d7d7d7;
+      background: #ffffff;
+    }
+  }
+}
+
+@media (width <= 64rem) {
+  .cardStage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .indicators {
+    display: none;
+  }
+}
+
+@media (width <= 44rem) {
+  .detailPanel {
+    min-height: auto;
+    padding:
+            calc(var(--header-height) + 3rem)
+            var(--page-padding)
+            4rem;
+  }
+
+  .introduction {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .headingBlock,
+  .copy,
+  .backButton {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .headingBlock h1 {
+    font-size: 1.15rem;
+  }
+
+  .copy p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .backButton {
+    width: fit-content;
+    margin-top: 0.5rem;
+  }
+
+  .cardStage {
+    display: flex;
+    width: calc(100% + (var(--page-padding) * 2));
+    align-items: flex-end;
+    margin-top: 3rem;
+    margin-inline: calc(var(--page-padding) * -1);
+    padding: 2.75rem var(--page-padding) 1rem;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-padding-inline: var(--page-padding);
+    scroll-snap-type: x mandatory;
+  }
+
+  .serviceCard {
+    min-width: min(82vw, 21rem);
+    min-height: 21rem;
+    border-radius: 2.5rem;
+    scroll-snap-align: center;
+
+    &[aria-pressed='true'] {
+      transform: translateY(-1.5rem);
+    }
+
+    &:hover,
+    &[aria-pressed='true']:hover {
+      transform: translateY(-1.5rem);
+    }
+
+    h2 {
+      font-size: clamp(2.25rem, 11vw, 3rem);
+    }
+
+    ul {
+      font-size: 1.05rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backButton,
+  .serviceCard,
+  .indicators span {
+    transition: none;
+  }
+}

@@ -9,25 +9,25 @@ const services = [
         title: 'Accounting Operations',
         description:
             'Manage the financial foundation of your business through bookkeeping, accounts payable and receivable, payroll administration, and month-end close support.',
-        href: '#accounting-operations',
+        href: '/services/accounting-operations',
     },
     {
         title: 'Compliance Services',
         description:
             'Maintain confidence through financial reporting, audit readiness, tax support, internal controls, and risk management.',
-        href: '#compliance-services',
+        href: '/services/compliance-services',
     },
     {
         title: 'Financial Advisory',
         description:
             'Gain strategic insights through controller services, FP&A, forecasting, budgeting, KPI development, and fractional CFO leadership.',
-        href: '#financial-advisory',
+        href: '/services/financial-advisory',
     },
     {
         title: 'Technology & Automation',
         description:
             'Modernize finance operations through workflow optimization, ERP support, intelligent automation, and scalable financial systems.',
-        href: '#technology-automation',
+        href: '/services/technology-automation',
     },
 ] as const;
 
