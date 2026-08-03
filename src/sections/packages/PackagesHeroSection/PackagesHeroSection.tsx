@@ -6,27 +6,30 @@ import styles from './PackagesHeroSection.module.scss';
 
 const accessibleRoles = [
     'Staff Accountant',
-    'Controller',
-    'Staff Accountant',
     'Senior Accountant',
+    'Controller',
     'FP&A Analyst',
     'Process Automation Specialist',
+    'Fractional CFO',
 ] as const;
 
 const packages = [
     {
         number: '01',
-        title: 'Essential Accounting',
+        titleLead: 'Essential',
+        titleRest: 'Accounting',
         href: '/packages/essential-accounting',
     },
     {
         number: '02',
-        title: 'Growth Finance',
+        titleLead: 'Growth',
+        titleRest: 'Finance',
         href: '/packages/growth-finance',
     },
     {
         number: '03',
-        title: 'Strategic CFO Package',
+        titleLead: 'Strategic',
+        titleRest: 'CFO Package',
         href: '/packages/strategic-cfo',
     },
 ] as const;
@@ -47,28 +50,32 @@ export function PackagesHeroSection() {
                 />
 
                 <div className={styles.intro}>
-                    <h1>Find the right package for your journey</h1>
+                    <div className={styles.introGlass}>
+                        <h1>Find the right package for your journey</h1>
 
-                    <p>
-                        Whether you&apos;re building your financial
-                        foundation, scaling operations, or seeking
-                        executive-level financial leadership, Sun Nearshore
-                        provides flexible solutions designed to evolve
-                        alongside your business.
-                    </p>
+                        <p>
+                            Whether you&apos;re building your financial
+                            foundation, scaling operations, or seeking
+                            executive-level financial leadership, Sun Nearshore
+                            provides flexible solutions designed to evolve
+                            alongside your business.
+                        </p>
+                    </div>
 
-                    <p className={styles.emphasis}>
-                        Unlike traditional service providers, Sun Nearshore
-                        offers a fully integrated finance ecosystem designed
-                        to support every stage of growth.
-                    </p>
+                    <div className={styles.highlightPanel}>
+                        <p className={styles.emphasis}>
+                            Unlike traditional service providers, Sun Nearshore
+                            offers a fully integrated finance ecosystem designed
+                            to support every stage of growth.
+                        </p>
 
-                    <div className={styles.access}>
-                        <span>Clients gain access to:</span>
-                        <div className={styles.roleList}>
-                            {accessibleRoles.map((role, index) => (
-                                <span key={`${role}-${index}`}>{role}</span>
-                            ))}
+                        <div className={styles.access}>
+                            <span>Clients gain access to:</span>
+                            <div className={styles.roleList}>
+                                {accessibleRoles.map((role) => (
+                                    <span key={role}>{role}</span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,6 +86,10 @@ export function PackagesHeroSection() {
                         partnership.
                     </p>
 
+                    <span className={styles.mobileExplore}>
+                        Explore our packages
+                    </span>
+
                     <div className={styles.packageGrid}>
                         {packages.map((packageItem, index) => (
                             <Link
@@ -88,7 +99,10 @@ export function PackagesHeroSection() {
                                 to={packageItem.href}
                             >
                                 <span>{packageItem.number}</span>
-                                <h2>{packageItem.title}</h2>
+                                <h2>
+                                    <span>{packageItem.titleLead}</span>{' '}
+                                    <span>{packageItem.titleRest}</span>
+                                </h2>
                             </Link>
                         ))}
                     </div>

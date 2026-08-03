@@ -9,7 +9,32 @@
   color: #100c1d;
 }
 
+.glassBackground {
+  position: absolute;
+  z-index: 0;
+  border-bottom: 1px solid transparent;
+  background: rgb(255 255 255 / 0%);
+  box-shadow: 0 0.75rem 2rem rgb(23 16 95 / 0%);
+  inset: 0;
+  pointer-events: none;
+  transition:
+          background-color var(--duration-normal) var(--ease-standard),
+          border-color var(--duration-normal) var(--ease-standard),
+          box-shadow var(--duration-normal) var(--ease-standard),
+          backdrop-filter var(--duration-normal) var(--ease-standard);
+}
+
+.headerScrolled .glassBackground {
+  border-bottom-color: rgb(23 16 95 / 8%);
+  background: rgb(255 255 255 / 74%);
+  box-shadow: 0 0.75rem 2rem rgb(23 16 95 / 8%);
+  backdrop-filter: blur(1.15rem) saturate(145%);
+  -webkit-backdrop-filter: blur(1.15rem) saturate(145%);
+}
+
 .container {
+  position: relative;
+  z-index: 1;
   display: grid;
   width: 100%;
   min-height: var(--header-height);
@@ -176,10 +201,23 @@
   }
 
   .logoLink {
-    display: none;
+    display: inline-flex;
+    width: 3rem;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+            opacity var(--duration-normal) var(--ease-standard),
+            transform var(--duration-normal) var(--ease-emphasized),
+            visibility 0s linear 0s;
+  }
+
+  .logoLinkHomeHero {
     opacity: 0;
     pointer-events: none;
+    transform: translateY(-0.35rem);
     visibility: hidden;
+    transition-delay: 0s, 0s, var(--duration-normal);
   }
 
   .desktopCta {
@@ -217,6 +255,8 @@
             ),
             #f4e6f1;
     opacity: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     pointer-events: none;
     transform: translateY(-1rem);
     transition:

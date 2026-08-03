@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { Section } from '@/components/layout/Section/Section';
@@ -31,12 +32,12 @@ export default function PackageDetailPage({
                         </header>
 
                         <div className={styles.packageCopy}>
-                            <h2>{packageDetail.tagline}</h2>
+                            <p>{packageDetail.tagline}</p>
                             <p>{packageDetail.description}</p>
                         </div>
 
                         <div className={styles.included}>
-                            <h2>What&apos;s Included</h2>
+                            <h2>What&apos;s Included:</h2>
                             <ul>
                                 {packageDetail.included.map((item) => (
                                     <li key={item}>{item}</li>
@@ -54,7 +55,22 @@ export default function PackageDetailPage({
                             ))}
                         </ul>
 
-                        <Link to="/packages">Back to packages</Link>
+                        <div className={styles.actions}>
+                            <Link
+                                className={styles.consultationButton}
+                                to="/#contact"
+                            >
+                                <span>Book a consultation</span>
+                                <ArrowRight aria-hidden="true" />
+                            </Link>
+
+                            <Link
+                                className={styles.backButton}
+                                to="/packages"
+                            >
+                                Back
+                            </Link>
+                        </div>
                     </aside>
                 </div>
             </Section>

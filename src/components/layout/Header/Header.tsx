@@ -36,9 +36,13 @@ const navigationItems = [
 ] as const;
 
 const MOBILE_NAVIGATION_QUERY = '(max-width: 56rem)';
+const SCROLLED_HEADER_THRESHOLD = 12;
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(() =>
+        window.scrollY > SCROLLED_HEADER_THRESHOLD,
+    );
     const [isMobileNavigation, setIsMobileNavigation] = useState(() =>
         window.matchMedia(MOBILE_NAVIGATION_QUERY).matches,
     );
@@ -46,6 +50,34 @@ export function Header() {
     const { pathname } = useLocation();
 
     const isHomePage = pathname === '/';
+    const [isHomeHeroActive, setIsHomeHeroActive] = useState(() =>
+        isHomePage && window.scrollY < window.innerHeight,
+    );
+
+    useEffect(() => {
+        const updateScrollState = () => {
+            setIsScrolled(window.scrollY > SCROLLED_HEADER_THRESHOLD);
+
+            if (!isHomePage) {
+                setIsHomeHeroActive(false);
+                return;
+            }
+
+            const homeHero = document.getElementById('home');
+            setIsHomeHeroActive(
+                Boolean(homeHero && homeHero.getBoundingClientRect().bottom > 0),
+            );
+        };
+
+        updateScrollState();
+        window.addEventListener('scroll', updateScrollState, { passive: true });
+        window.addEventListener('resize', updateScrollState);
+
+        return () => {
+            window.removeEventListener('scroll', updateScrollState);
+            window.removeEventListener('resize', updateScrollState);
+        };
+    }, [isHomePage]);
 
     useEffect(() => {
         if (!isMenuOpen || !isMobileNavigation) {
@@ -132,10 +164,23 @@ export function Header() {
     };
 
     return (
-        <header className={styles.header}>
+        <header
+            className={`${styles.header} ${
+                isScrolled ? styles.headerScrolled : ''
+            }`}
+        >
+            <span
+                className={styles.glassBackground}
+                aria-hidden="true"
+            />
+
             <Container className={styles.container}>
                 <Link
-                    className={styles.logoLink}
+                    className={`${styles.logoLink} ${
+                        isHomePage && isHomeHeroActive
+                            ? styles.logoLinkHomeHero
+                            : ''
+                    }`}
                     to="/"
                     aria-label="SNS home"
                     onClick={closeMenu}

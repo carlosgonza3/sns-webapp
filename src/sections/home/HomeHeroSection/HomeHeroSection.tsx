@@ -7,7 +7,6 @@ import {
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 
@@ -518,19 +517,6 @@ export function HomeHeroSection() {
                             className={styles.actions}
                             data-snap-reveal
                         >
-                            <Link
-                                className={
-                                    styles.primaryAction
-                                }
-                                to="/#contact"
-                            >
-                                <span>
-                                    Schedule a Consultation
-                                </span>
-
-                                <ArrowRight aria-hidden="true" />
-                            </Link>
-
                             <Link
                                 className={
                                     styles.secondaryAction
