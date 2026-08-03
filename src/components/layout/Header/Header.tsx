@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { ArrowRight, Menu, X } from 'lucide-react';
 import {
@@ -35,19 +35,68 @@ const navigationItems = [
     },
 ] as const;
 
+const MOBILE_NAVIGATION_QUERY = '(max-width: 56rem)';
+
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMobileNavigation, setIsMobileNavigation] = useState(() =>
+        window.matchMedia(MOBILE_NAVIGATION_QUERY).matches,
+    );
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
     const { pathname } = useLocation();
 
     const isHomePage = pathname === '/';
 
     useEffect(() => {
-        const previousOverflow = document.body.style.overflow;
+        if (!isMenuOpen || !isMobileNavigation) {
+            return;
+        }
 
-        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
 
         return () => {
             document.body.style.overflow = previousOverflow;
+        };
+    }, [isMenuOpen, isMobileNavigation]);
+
+    useEffect(() => {
+        const navigationQuery = window.matchMedia(MOBILE_NAVIGATION_QUERY);
+
+        const handleNavigationBreakpoint = () => {
+            setIsMobileNavigation(navigationQuery.matches);
+
+            if (!navigationQuery.matches) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        handleNavigationBreakpoint();
+        navigationQuery.addEventListener('change', handleNavigationBreakpoint);
+
+        return () => {
+            navigationQuery.removeEventListener('change', handleNavigationBreakpoint);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isMenuOpen) {
+            return;
+        }
+
+        const handleEscapeKey = (event: KeyboardEvent) => {
+            if (event.key !== 'Escape') {
+                return;
+            }
+
+            setIsMenuOpen(false);
+            window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+        };
+
+        document.addEventListener('keydown', handleEscapeKey);
+
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
         };
     }, [isMenuOpen]);
 
@@ -113,6 +162,8 @@ export function Header() {
                             : ''
                     }`}
                     aria-label="Primary navigation"
+                    aria-hidden={isMobileNavigation && !isMenuOpen}
+                    inert={isMobileNavigation && !isMenuOpen}
                 >
                     <Link
                         className={styles.mobileMenuLogo}
@@ -174,6 +225,7 @@ export function Header() {
                 </Link>
 
                 <button
+                    ref={menuButtonRef}
                     className={styles.menuButton}
                     type="button"
                     aria-label={

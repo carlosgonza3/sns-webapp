@@ -3,7 +3,7 @@ import { SnapPage } from '@/components/layout/SnapPage/SnapPage';
 import { FinanceExpertiseSection } from '@/sections/home/FinanceExpertiseSection/FinanceExpertiseSection';
 import { HomeHeroSection } from '@/sections/home/HomeHeroSection/HomeHeroSection';
 import { ServicesOverviewSection } from '@/sections/home/ServicesOverviewSection/ServicesOverviewSection';
-import {ContactFinalSection} from "@/sections/home/ContactFinalSection/  ContactFinalSection";
+import { ContactFinalSection } from '@/sections/home/ContactFinalSection/ContactFinalSection';
 
 export default function HomePage() {
     return (
@@ -15,7 +15,7 @@ export default function HomePage() {
 
                 <ServicesOverviewSection />
 
-               <ContactFinalSection />
+                <ContactFinalSection />
             </SnapPage>
         </main>
     );
